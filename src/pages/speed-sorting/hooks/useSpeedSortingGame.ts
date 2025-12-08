@@ -122,7 +122,10 @@ const transformDataToGameFormat = (
   return { words, categories };
 };
 
-export function useSpeedSortingGame(detail: SpeedSortingDetail | null = null) {
+export function useSpeedSortingGame(
+  detail: SpeedSortingDetail | null = null,
+  isMuted: boolean = false,
+) {
   const [words, setWords] = useState<WordItem[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [score, setScore] = useState(0);
@@ -161,6 +164,29 @@ export function useSpeedSortingGame(detail: SpeedSortingDetail | null = null) {
       },
     );
   }, []);
+
+  // sync mute flag to every audio instance
+  useEffect(() => {
+    const applyMute = (audio: HTMLAudioElement) => {
+      audio.muted = isMuted;
+    };
+    [
+      correctAudio,
+      failedAudio,
+      startAudio,
+      countdownAudio,
+      victoryAudio,
+    ].forEach(applyMute);
+    backsounds.forEach(applyMute);
+  }, [
+    backsounds,
+    correctAudio,
+    countdownAudio,
+    failedAudio,
+    isMuted,
+    startAudio,
+    victoryAudio,
+  ]);
 
   useEffect(() => {
     if (detail) {

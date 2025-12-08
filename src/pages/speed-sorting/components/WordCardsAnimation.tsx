@@ -94,6 +94,7 @@ export function WordCardsAnimation({
             return (
               <div
                 key={`${word.id}-${index}`}
+                data-skip-click-sound
                 draggable={canDrag}
                 onDragStart={
                   canDrag ? (e) => onDragStart(e, word.id) : undefined

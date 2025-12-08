@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Maximize2, Minimize2, Volume2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Maximize2,
+  Minimize2,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { useState } from "react";
 import { formatTime } from "../hooks/useSpeedSortingGame";
 
@@ -7,12 +13,23 @@ interface GameHeaderProps {
   timer: number;
   score: number;
   onExit: () => void;
+  isMuted: boolean;
+  onToggleMute: () => void;
+  onClickSound?: () => void;
 }
 
-export function GameHeader({ timer, score, onExit }: GameHeaderProps) {
+export function GameHeader({
+  timer,
+  score,
+  onExit,
+  isMuted,
+  onToggleMute,
+  onClickSound,
+}: GameHeaderProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const toggleFullscreen = () => {
+    onClickSound?.();
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
       setIsFullscreen(true);
@@ -30,7 +47,10 @@ export function GameHeader({ timer, score, onExit }: GameHeaderProps) {
             size="sm"
             variant="ghost"
             className="hidden md:flex text-cyan-100 hover:text-white hover:bg-cyan-500/10"
-            onClick={onExit}
+            onClick={() => {
+              onClickSound?.();
+              onExit();
+            }}
           >
             <ArrowLeft /> Exit Game
           </Button>
@@ -38,7 +58,10 @@ export function GameHeader({ timer, score, onExit }: GameHeaderProps) {
             size="sm"
             variant="ghost"
             className="block md:hidden text-cyan-100 hover:text-white hover:bg-cyan-500/10"
-            onClick={onExit}
+            onClick={() => {
+              onClickSound?.();
+              onExit();
+            }}
           >
             <ArrowLeft />
           </Button>
@@ -59,8 +82,17 @@ export function GameHeader({ timer, score, onExit }: GameHeaderProps) {
             size="sm"
             variant="ghost"
             className="p-2 text-cyan-100 hover:text-white hover:bg-cyan-500/10"
+            onClick={() => {
+              const nextMuted = !isMuted;
+              onToggleMute();
+              if (!nextMuted) onClickSound?.();
+            }}
           >
-            <Volume2 className="w-5 h-5" />
+            {isMuted ? (
+              <VolumeX className="w-5 h-5" />
+            ) : (
+              <Volume2 className="w-5 h-5" />
+            )}
           </Button>
           <Button
             size="sm"

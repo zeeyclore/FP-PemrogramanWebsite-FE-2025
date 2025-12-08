@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { formatTime } from "../hooks/useSpeedSortingGame";
+import type { SpeedSortingTheme } from "../themes";
 
 interface GameEndScreenProps {
   finalTime: number;
@@ -7,6 +8,8 @@ interface GameEndScreenProps {
   incorrectAttempts: number;
   onPlayAgain: () => void;
   onBackToHome: () => void;
+  theme: SpeedSortingTheme;
+  onClickSound?: () => void;
 }
 
 export function GameEndScreen({
@@ -15,11 +18,36 @@ export function GameEndScreen({
   incorrectAttempts,
   onPlayAgain,
   onBackToHome,
+  theme,
+  onClickSound,
 }: GameEndScreenProps) {
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-[#050816] text-slate-100 relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.15),transparent_45%),radial-gradient(circle_at_80%_30%,rgba(16,185,129,0.12),transparent_45%)]" />
-      <div className="relative bg-white/5 p-10 sm:p-12 rounded-2xl border border-cyan-400/30 shadow-[0_30px_120px_-60px_rgba(59,130,246,0.9)] text-center max-w-md w-full mx-4 backdrop-blur-2xl">
+    <div
+      className="w-full min-h-screen flex flex-col justify-center items-center text-slate-100 relative overflow-hidden"
+      style={{
+        backgroundColor: "var(--bg-base)",
+        ["--bg-base" as string]: theme.base,
+        ["--bg-radials" as string]: theme.radials,
+        ["--bg-linear" as string]: theme.linear,
+        ["--card-bg" as string]: theme.cardBg,
+        ["--card-overlay" as string]: theme.cardOverlay,
+        ["--card-bottom" as string]: theme.cardBottomFade,
+        ["--accent-strong" as string]: theme.accentStrong,
+        ["--accent-weak" as string]: theme.accentWeak,
+      }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ backgroundImage: "var(--bg-radials)" }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ backgroundImage: "var(--bg-linear)" }}
+      />
+      <div
+        className="relative bg-white/5 p-10 sm:p-12 rounded-2xl border border-cyan-400/30 shadow-[0_30px_120px_-60px_rgba(59,130,246,0.9)] text-center max-w-md w-full mx-4 backdrop-blur-2xl"
+        style={{ backgroundColor: "var(--card-bg)" }}
+      >
         <div className="text-5xl mb-4">🎉</div>
         <h1 className="text-3xl font-bold text-cyan-100 mb-3">
           Mission Complete
@@ -53,14 +81,20 @@ export function GameEndScreen({
 
         <div className="space-y-3">
           <Button
-            onClick={onPlayAgain}
+            onClick={() => {
+              onClickSound?.();
+              onPlayAgain();
+            }}
             className="w-full bg-linear-to-r from-cyan-500 via-indigo-500 to-emerald-500 text-white border-0 shadow-[0_15px_60px_-25px_rgba(59,130,246,0.9)] hover:scale-[1.01] transition-transform"
             size="lg"
           >
             Play Again
           </Button>
           <Button
-            onClick={onBackToHome}
+            onClick={() => {
+              onClickSound?.();
+              onBackToHome();
+            }}
             variant="outline"
             className="w-full border-cyan-300/60 bg-white/5 text-cyan-50 hover:bg-cyan-500/15 hover:text-white"
             size="lg"
