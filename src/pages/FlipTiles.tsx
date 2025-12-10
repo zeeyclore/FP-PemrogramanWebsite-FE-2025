@@ -538,7 +538,6 @@ export default function FlipTiles() {
                 <RotateCcw className="w-4 h-4 mr-2" />
                 Start again
               </DropdownMenuItem>
-              <DropdownMenuItem>Resume</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
