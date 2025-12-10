@@ -13,6 +13,7 @@ import ProtectedRoute from "./routes/ProtectedRoutes";
 import CreateAnagram from "./pages/anagram/CreateAnagram";
 import PlayAnagram from "./pages/anagram/PlayAnagram";
 import EditAnagram from "./pages/anagram/EditAnagram";
+// Fix typo case sensitivity
 
 // 📌 TAMBAHAN 1: Import Komponen Game Pair or No Pair
 import PairOrNoPairGame from "./pages/pair-or-no-pair";
