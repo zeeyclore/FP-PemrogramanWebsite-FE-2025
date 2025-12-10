@@ -571,6 +571,57 @@ export default function FlipTiles() {
           <Typography variant="muted" className="text-lg">
             {gameData.description}
           </Typography>
+
+          <div className="flex justify-center gap-3 mt-6">
+            <Button
+              variant="outline"
+              className="shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 border-slate-300 bg-white"
+              onClick={shuffleTiles}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-2"
+              >
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                <polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+                <polyline points="7.5 19.79 7.5 14.6 3 12" />
+                <polyline points="21 12 16.5 14.6 16.5 19.79" />
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                <line x1="12" y1="22.08" x2="12" y2="12" />
+              </svg>
+              Shuffle
+            </Button>
+            <Button
+              variant="outline"
+              className="shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 border-slate-300 bg-white"
+              onClick={spinRandom}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg>
+              Random Spinner
+            </Button>
+          </div>
         </div>
 
         {/* Tiles Grid with 3D animation */}
