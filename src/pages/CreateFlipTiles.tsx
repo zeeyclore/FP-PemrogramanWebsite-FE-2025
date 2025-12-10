@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
@@ -35,6 +35,10 @@ function CreateFlipTiles() {
   ]);
   const [isPublished, setIsPublished] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    console.log("CreateFlipTiles mounted");
+  }, []);
 
   const addTile = () => {
     setTiles((prev) => [

@@ -62,16 +62,18 @@ function EditFlipTiles() {
         console.error("Fetch error:", error);
         // Backend handles authorization, frontend receives 403 if unauthorized
         toast.error("Failed to load game or you don't have permission");
-        navigate("/my-projects");
+        // Don't auto-redirect, let user see the error state
+        setLoading(false);
       } finally {
         setLoading(false);
       }
     };
 
     if (id) {
+      console.log("EditFlipTiles mounted, fetching id:", id);
       fetchGame();
     }
-  }, [id, navigate, user]);
+  }, [id, user]);
 
   const addTile = () => {
     setTiles((prev) => [
