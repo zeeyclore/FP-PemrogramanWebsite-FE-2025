@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
@@ -669,14 +669,7 @@ export default function FlipTiles() {
         </div>
 
         {tiles.every((t) => t.removed) && (
-          <div className="text-center py-12 animate-in fade-in slide-in-from-bottom-5">
-            <Typography variant="muted" className="text-xl font-medium">
-              All tiles removed!
-            </Typography>
-            <Button variant="outline" className="mt-4" onClick={restoreAll}>
-              Restore All Tiles
-            </Button>
-          </div>
+          <GameCompleteOverlay onRestart={restoreAll} />
         )}
       </div>
 
@@ -784,6 +777,97 @@ export default function FlipTiles() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// Sub-component to prevent re-renders of random values
+function GameCompleteOverlay({ onRestart }: { onRestart: () => void }) {
+  // Generate stable random values once
+  const confettiItems = useMemo(() => {
+    return Array.from({ length: 50 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      width: Math.random() * 10 + 5,
+      height: Math.random() * 10 + 5,
+      bg: ["#ef4444", "#3b82f6", "#22c55e", "#eab308", "#a855f7", "#ec4899"][
+        Math.floor(Math.random() * 6)
+      ],
+      duration: Math.random() * 3 + 2,
+      delay: Math.random() * 2,
+      rotation: Math.random() * 360,
+    }));
+  }, []);
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4">
+      {/* Confetti Particles */}
+      {confettiItems.map((item) => (
+        <div
+          key={item.id}
+          className="absolute top-0"
+          style={{
+            left: `${item.left}%`,
+            top: `-20px`,
+            width: `${item.width}px`,
+            height: `${item.height}px`,
+            backgroundColor: item.bg,
+            transform: `rotate(${item.rotation}deg)`,
+            animation: `confetti-fall ${item.duration}s linear infinite`,
+            animationDelay: `${item.delay}s`,
+          }}
+        />
+      ))}
+
+      {/* Completion Card */}
+      <div className="bg-white/95 backdrop-blur-xl border border-white/60 shadow-2xl rounded-3xl p-8 md:p-12 text-center animate-in zoom-in-50 slide-in-from-bottom-10 fade-in duration-500 pointer-events-auto max-w-lg w-full mx-auto relative overflow-hidden">
+        {/* Shine effect on card */}
+        <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 animate-[shimmer_2.5s_infinite]"></div>
+
+        <div className="mb-8 flex justify-center relative">
+          <div className="absolute inset-0 bg-yellow-400/20 blur-3xl rounded-full scale-150 animate-pulse"></div>
+          <div className="w-28 h-28 bg-gradient-to-b from-yellow-100 to-orange-100 rounded-full flex items-center justify-center shadow-[0_10px_20px_rgba(251,191,36,0.2)] border-4 border-yellow-200 animate-bounce relative z-10">
+            <span className="text-6xl drop-shadow-sm">🏆</span>
+          </div>
+        </div>
+
+        <Typography
+          variant="h2"
+          className="text-5xl font-black text-slate-800 mb-3 drop-shadow-sm tracking-tight"
+        >
+          Game Clear!
+        </Typography>
+        <Typography
+          variant="muted"
+          className="text-xl text-slate-600 mb-10 font-medium max-w-sm mx-auto leading-relaxed"
+        >
+          You've successfully cleared all the tiles. Amazing memory!
+        </Typography>
+
+        <Button
+          size="lg"
+          className="w-full h-14 text-xl font-bold bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 rounded-xl"
+          onClick={onRestart}
+        >
+          <RotateCcw className="w-6 h-6 mr-3 animate-spin-slow" />
+          Play Again
+        </Button>
+      </div>
+
+      {/* Inject Confetti Keyframes */}
+      <style>{`
+        @keyframes confetti-fall {
+          0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-150%) skewX(-12deg); }
+          100% { transform: translateX(150%) skewX(-12deg); }
+        }
+        .animate-spin-slow {
+            animation: spin 3s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }
