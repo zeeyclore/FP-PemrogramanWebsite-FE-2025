@@ -6,7 +6,7 @@ import PauseDialog from "./components/PauseDialog";
 import { useGetMazeChaseGame } from "@/api/maze-chase/useGetMazeChaseGame";
 import heart from "./assets/heart.png";
 import forrest from "./assets/maze/bg_maze.jpg";
-import startBg from "@/assets/maze-chase/Home_Background_assets.png";
+import startBg from "./assets/Home_Background_assets.png";
 
 type MoveDir = "up" | "down" | "left" | "right" | null;
 

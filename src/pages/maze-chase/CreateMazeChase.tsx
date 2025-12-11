@@ -19,8 +19,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useCreateMazeChase as createMazeChaseGame } from "@/api/maze-chase/useCreateMazeChase";
-import { AVAILABLE_MAPS } from "@/assets/maze-chase/maps";
-import backgroundImage from "@/assets/maze-chase/backgroundcreate.jpg";
+import { AVAILABLE_MAPS } from "@/pages/maze-chase/assets/maps";
+import backgroundImage from "./assets/backgroundcreate.jpg";
 import {
   AlertDialog,
   AlertDialogTrigger,

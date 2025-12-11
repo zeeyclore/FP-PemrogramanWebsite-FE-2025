@@ -1,12 +1,12 @@
 import React from "react";
-import backgroundHome from "@/assets/maze-chase/Home_Background_assets.png";
-import logoHome from "@/assets/maze-chase/Home_Logo_assets.png";
-import characterHome from "@/assets/maze-chase/Home_Character_assets.png";
-import DustHome from "@/assets/maze-chase/Home_Dust_assets.png";
-import BookshelfHome from "@/assets/maze-chase/Home_Bookshelf_assets.png";
-import DeskHome from "@/assets/maze-chase/Home_Desk_assets.png";
-import CarpetHome from "@/assets/maze-chase/Home_Carpet_assets.png";
-import buttonHome from "@/assets/maze-chase/Home_Button_assets.png";
+import backgroundHome from "./../assets/Home_Background_assets.png";
+import logoHome from "./../assets/Home_Logo_assets.png";
+import characterHome from "./../assets/Home_Character_assets.png";
+import DustHome from "./../assets/Home_Dust_assets.png";
+import BookshelfHome from "./../assets/Home_Bookshelf_assets.png";
+import DeskHome from "./../assets/Home_Desk_assets.png";
+import CarpetHome from "./../assets/Home_Carpet_Assets.png";
+import buttonHome from "./../assets/Home_Button_assets.png";
 
 interface StartScreenProps {
   onStart: () => void;
