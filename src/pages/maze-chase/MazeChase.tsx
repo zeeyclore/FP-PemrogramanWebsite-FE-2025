@@ -166,7 +166,7 @@ const Game = () => {
           {/* Godot Game iframe */}
           <iframe
             ref={iframeRef}
-            src="/godot/FP-Pemweb.html"
+            src="/maze-chase/godot/FP-Pemweb.html"
             className="w-full h-full border-0"
             style={{
               pointerEvents: isPaused ? "none" : "auto",
